@@ -14,13 +14,10 @@ public class Main {
 	public static void main(String[] args) {
 		Thread init = new Init();
 		Thread t = new MyThread();
+		Thread broadcastListener = new BroadcastListener();
+		broadcastListener.start();
 		init.start();
-		try {
-			init.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		t.start();
 //		System.out.println(1);
 		JFrame obj=new JFrame();
@@ -43,7 +40,7 @@ class MyThread extends Thread {
     @SuppressWarnings("resource")
 	@Override
     public void run() {
-        System.out.println("network listener enabled!");
+        System.out.println("Action listener enabled!");
         DatagramSocket ds = null;
         try {
 			ds = new DatagramSocket(6666);
@@ -51,7 +48,7 @@ class MyThread extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        System.out.println("Waiting for Packages...");
+        System.out.println("Waiting for Actions...");
         for (;;) {
     	    byte[] buffer = new byte[1024];
     	    DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
