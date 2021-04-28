@@ -12,7 +12,15 @@ import java.nio.charset.StandardCharsets;
 public class Main {
 
 	public static void main(String[] args) {
+		Thread init = new Init();
 		Thread t = new MyThread();
+		init.start();
+		try {
+			init.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		t.start();
 //		System.out.println(1);
 		JFrame obj=new JFrame();
@@ -32,9 +40,10 @@ public class Main {
 }
 
 class MyThread extends Thread {
-    @Override
+    @SuppressWarnings("resource")
+	@Override
     public void run() {
-        System.out.println("start new thread!");
+        System.out.println("network listener enabled!");
         DatagramSocket ds = null;
         try {
 			ds = new DatagramSocket(6666);

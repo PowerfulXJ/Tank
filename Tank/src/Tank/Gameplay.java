@@ -23,19 +23,19 @@ public class Gameplay  extends JPanel implements ActionListener
 	private brick br;
 	
 	private ImageIcon player1;	
-	private int player1X = 200;
-	private int player1Y = 550;	
-	private boolean player1right = false;
+	private int player1X = 0;
+	private int player1Y = 250;	
+	private boolean player1right = true;
 	private boolean player1left = false;
 	private boolean player1down = false;
-	private boolean player1up = true;	
+	private boolean player1up = false;	
 	private int player1score = 0;
 	private int player1lives = 5;
 	private boolean player1Shoot = false;
 	private String bulletShootDir1 = "";
 	
 	private ImageIcon player2;	
-	private int player2X = 400;
+	private int player2X = 300;
 	private int player2Y = 550;	
 	private boolean player2right = false;
 	private boolean player2left = false;
@@ -46,14 +46,27 @@ public class Gameplay  extends JPanel implements ActionListener
 	private boolean player2Shoot = false;
 	private String bulletShootDir2 = "";
 	
+	private ImageIcon player3;	
+	private int player3X = 600;
+	private int player3Y = 250;	
+	private boolean player3right = false;
+	private boolean player3left = true;
+	private boolean player3down = false;
+	private boolean player3up = false;
+	private int player3score = 0;
+	private int player3lives = 5;
+	private boolean player3Shoot = false;
+	private String bulletShootDir3 = "";
+	
 	private Timer timer;
 	private int delay=8;
 	
-	private Player1Listener player1Listener;
-	private Player2Listener player2Listener;
+	private PlayerListener playerListener = null;
+	private Player2Listener player2Listener = null;
 	
 	private Player1Bullet player1Bullet = null;
 	private Player2Bullet player2Bullet = null;
+	private Player3Bullet player3Bullet = null;
 	
 	private boolean play = true;
 	
@@ -62,17 +75,17 @@ public class Gameplay  extends JPanel implements ActionListener
 	public Gameplay()
 	{				
 		br = new brick();
-		player1Listener = new Player1Listener();
+		playerListener = new PlayerListener();
 		player2Listener = new Player2Listener();
 		setFocusable(true);
 		//addKeyListener(this);
-		addKeyListener(player1Listener);
+		addKeyListener(playerListener);
 		addKeyListener(player2Listener);
 		setFocusTraversalKeysEnabled(false);
 		
 		Global.Player2Actions = new LinkedList<String>();
-		PlayerListener playerListener = new PlayerListener();
-		playerListener.start();
+		webPlayerListener webplayerListener = new webPlayerListener();
+		webplayerListener.start();
 		
         timer=new Timer(delay,this);
 		timer.start();
@@ -117,8 +130,20 @@ public class Gameplay  extends JPanel implements ActionListener
 				player2=new ImageIcon("player2_tank_right.png");
 			else if(player2left)
 				player2=new ImageIcon("player2_tank_left.png");
-						
+			
 			player2.paintIcon(this, g, player2X, player2Y);
+			
+			// draw player 3
+			if(player3up)
+				player3=new ImageIcon("player3_tank_up.png");	
+			else if(player3down)
+				player3=new ImageIcon("player3_tank_down.png");
+			else if(player3right)
+				player3=new ImageIcon("player3_tank_right.png");
+			else if(player3left)
+				player3=new ImageIcon("player3_tank_left.png");
+						
+			player3.paintIcon(this, g, player3X, player3Y);
 			
 			if(player1Bullet != null && player1Shoot)
 			{
@@ -233,6 +258,64 @@ public class Gameplay  extends JPanel implements ActionListener
 					bulletShootDir2 = "";
 				}
 			}
+			
+			if(player3Bullet != null && player3Shoot)
+			{
+				if(bulletShootDir3.equals(""))
+				{
+					if(player3up)
+					{					
+						bulletShootDir3 = "up";
+					}
+					else if(player3down)
+					{					
+						bulletShootDir3 = "down";
+					}
+					else if(player3right)
+					{				
+						bulletShootDir3 = "right";
+					}
+					else if(player3left)
+					{			
+						bulletShootDir3 = "left";
+					}
+				}
+				else
+				{
+					player3Bullet.move(bulletShootDir3);
+					player3Bullet.draw(g);
+				}
+				
+				
+				if(new Rectangle(player3Bullet.getX(), player3Bullet.getY(), 10, 10)
+				.intersects(new Rectangle(player1X, player1Y, 50, 50)))
+				{
+					player3score += 10;
+					player1lives -= 1;
+					player3Bullet = null;
+					player3Shoot = false;
+					bulletShootDir3 = "";
+				}
+				
+				if(player3Bullet != null && br.checkCollision(player3Bullet.getX(), player3Bullet.getY())
+						|| br.checkSolidCollision(player3Bullet.getX(), player3Bullet.getY()))
+				{
+					player3Bullet = null;
+					player3Shoot = false;
+					bulletShootDir3 = "";				
+				}
+				
+				if(player3Bullet != null && player3Bullet.getY() < 1 
+						|| player3Bullet.getY() > 580
+						|| player3Bullet.getX() < 1
+						|| player3Bullet.getX() > 630)
+				{
+					player3Bullet = null;
+					player3Shoot = false;
+					bulletShootDir3 = "";
+				}
+			}
+			
 		}
 	
 		
@@ -280,7 +363,7 @@ public class Gameplay  extends JPanel implements ActionListener
 		repaint();
 	}
 
-	private class Player1Listener implements KeyListener
+	private class PlayerListener implements KeyListener
 	{
 		public void keyTyped(KeyEvent e) {}
 		public void keyReleased(KeyEvent e) {}		
@@ -301,28 +384,38 @@ public class Gameplay  extends JPanel implements ActionListener
 			if(e.getKeyCode()== KeyEvent.VK_SPACE && (player1lives == 0 || player2lives == 0))
 			{
 				br = new brick();
-				player1X = 200;
-				player1Y = 550;	
-				player1right = false;
+				player1X = 0;
+				player1Y = 250;	
+				player1right = true;
 				player1left = false;
 				player1down = false;
 				player1up = true;	
 				
-				player2X = 400;
+				player2X = 300;
 				player2Y = 550;	
 				player2right = false;
 				player2left = false;
 				player2down = false;
 				player2up = true;	
 				
+				player3X = 600;
+				player3Y = 250;	
+				player3right = false;
+				player3left = true;
+				player3down = false;
+				player3up = false;	
+				
 				player1score = 0;
 				player1lives = 5;
 				player2score = 0;
 				player2lives = 5;
+				player3score = 0;
+				player3lives = 5;
+				
 				play = true;
 				repaint();
 			}
-			if(e.getKeyCode()== KeyEvent.VK_U)
+			if(e.getKeyCode()== KeyEvent.VK_F)
 			{
 				byte[] data = "shoot".getBytes();
 	    		DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -354,7 +447,7 @@ public class Gameplay  extends JPanel implements ActionListener
 					player1Shoot = true;
 				}
 			}
-			if(e.getKeyCode()== KeyEvent.VK_W)
+			if(e.getKeyCode()== KeyEvent.VK_UP)
 			{
 				byte[] data = "up".getBytes();
 	    		DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -373,7 +466,7 @@ public class Gameplay  extends JPanel implements ActionListener
 					player1Y-=10;
 
 			}
-			if(e.getKeyCode()== KeyEvent.VK_A)
+			if(e.getKeyCode()== KeyEvent.VK_LEFT)
 			{
 				byte[] data = "left".getBytes();
 	    		DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -391,7 +484,7 @@ public class Gameplay  extends JPanel implements ActionListener
 				if(!(player1X < 10))
 					player1X-=10;
 			}
-			if(e.getKeyCode()== KeyEvent.VK_S)
+			if(e.getKeyCode()== KeyEvent.VK_DOWN)
 			{
 				byte[] data = "down".getBytes();
 	    		DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -409,7 +502,7 @@ public class Gameplay  extends JPanel implements ActionListener
 				if(!(player1Y > 540))
 					player1Y+=10;
 			}
-			if(e.getKeyCode()== KeyEvent.VK_D)
+			if(e.getKeyCode()== KeyEvent.VK_RIGHT)
 			{
 				byte[] data = "right".getBytes();
 	    		DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -506,7 +599,7 @@ public class Gameplay  extends JPanel implements ActionListener
 	}
 	
 	
-	class PlayerListener extends Thread {
+	class webPlayerListener extends Thread {
 	    @Override
 	    public void run() {
 	    	System.out.println("Listening to actions");
@@ -525,68 +618,65 @@ public class Gameplay  extends JPanel implements ActionListener
 	    				{
 	    					if(player2up)
 	    					{					
-	    						player2Bullet = new Player2Bullet(player2X + 20, player2Y);
+	    						player3Bullet = new Player3Bullet(player3X + 20, player3Y);
 	    					}
-	    					else if(player2down)
+	    					else if(player3down)
 	    					{					
-	    						player2Bullet = new Player2Bullet(player2X + 20, player2Y + 40);
+	    						player3Bullet = new Player3Bullet(player3X + 20, player3Y + 40);
 	    					}
 	    					else if(player2right)
 	    					{				
-	    						player2Bullet = new Player2Bullet(player2X + 40, player2Y + 20);
+	    						player3Bullet = new Player3Bullet(player3X + 40, player3Y + 20);
 	    					}
-	    					else if(player2left)
+	    					else if(player3left)
 	    					{			
-	    						player2Bullet = new Player2Bullet(player2X, player2Y + 20);
+	    						player3Bullet = new Player3Bullet(player3X, player3Y + 20);
 	    					}
 	    					
-	    					player2Shoot = true;
+	    					player3Shoot = true;
 	    				}
 	    			}
 	    			if(s.equals("up"))
 	    			{
-	    				player2right = false;
-	    				player2left = false;
-	    				player2down = false;
-	    				player2up = true;		
+	    				player3right = false;
+	    				player3left = false;
+	    				player3down = false;
+	    				player3up = true;		
 	    				
-	    				if(!(player2Y < 10))
-	    					player2Y-=10;
+	    				if(!(player3Y < 10))
+	    					player3Y-=10;
 
 	    			}
 	    			if(s.equals("left"))
 	    			{
-	    				player2right = false;
-	    				player2left = true;
-	    				player2down = false;
-	    				player2up = false;
+	    				player3right = false;
+	    				player3left = true;
+	    				player3down = false;
+	    				player3up = false;
 	    				
-	    				if(!(player2X < 10))
-	    					player2X-=10;
+	    				if(!(player3X < 10))
+	    					player3X-=10;
 	    			}
 	    			if(s.equals("down"))
 	    			{
-	    				player2right = false;
-	    				player2left = false;
-	    				player2down = true;
-	    				player2up = false;
+	    				player3right = false;
+	    				player3left = false;
+	    				player3down = true;
+	    				player3up = false;
 	    				
-	    				if(!(player2Y > 540))
-	    					player2Y+=10;
+	    				if(!(player3Y > 540))
+	    					player3Y+=10;
 	    			}
 	    			if(s.equals("right"))
 	    			{
-	    				player2right = true;
-	    				player2left = false;
-	    				player2down = false;
-	    				player2up = false;
+	    				player3right = true;
+	    				player3left = false;
+	    				player3down = false;
+	    				player3up = false;
 	    				
-	    				if(!(player2X > 590))
-	    					player2X+=10;
+	    				if(!(player3X > 590))
+	    					player3X+=10;
 	    			}
-	    			
-	    		
-	    			
 	    			
 	    		}
 	    	}
