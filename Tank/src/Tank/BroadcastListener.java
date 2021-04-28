@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 public class BroadcastListener extends Thread {
 	
-	private int ACK = 0;
+	//private int ACK = 0;
 	private int port = 9999;
 	@Override
 	public void run() {
@@ -30,15 +30,15 @@ public class BroadcastListener extends Thread {
 			    String s = new String(recvpacket.getData(), recvpacket.getOffset(), recvpacket.getLength(), StandardCharsets.UTF_8);
 				if (s.equals("Hello")) {
 					Global.totalPlayer += 1;
-					Global.localplayer =- 1;
+					Global.localplayer -= 1;
 					InetAddress ipaddr = recvpacket.getAddress();
-					ds = new DatagramSocket();
-					ds.connect(ipaddr, port);
+					@SuppressWarnings("resource")
+					DatagramSocket ds1 = new DatagramSocket();
+					ds1.connect(ipaddr, port);
 					byte[] data = "Recognized".getBytes();
-					dp = new DatagramPacket(data, data.length);
-					ds.send(dp);
-					dp = null;
-					System.out.println("Recieved HELLO!");
+					DatagramPacket dp1 = new DatagramPacket(data, data.length);
+					ds1.send(dp1);
+					System.out.println("Recieved Hello!");
 				}
 				if (s.equals("Recognized")) {
 					Global.totalPlayer += 1;
