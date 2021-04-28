@@ -15,24 +15,35 @@ public class Init extends Thread {
 	//@SuppressWarnings("resource")
 	@Override
 	public void run() {
-		
+		String bdcast = "10.0.0.255";
+		int port = 9999;
 		try {
-			ds.connect(InetAddress.getByName("localhost"), 1024);
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} // 连接指定服务器和端口
+			InetAddress adds = InetAddress.getByName(bdcast);
+			DatagramSocket ds = new DatagramSocket();
+			String message = "Hello";
+			DatagramPacket dp = new DatagramPacket(message .getBytes(),
+					message.length(), adds, port);
+			ds.send(dp);
+			ds.close();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
 		// 发送:
-		byte[] data = "Hello".getBytes();
-		DatagramPacket packet = new DatagramPacket(data, data.length);
+		//DatagramPacket packet = new DatagramPacket(data, data.length);
+//		try {
+//			ds.send(packet);
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		DatagramSocket ds = null;
+		DatagramPacket dp = null;
 		try {
-			ds.send(packet);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			ds = new DatagramSocket(1024);
+			ds = new DatagramSocket(port);
 			ds.setSoTimeout(1000);
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
@@ -43,7 +54,7 @@ public class Init extends Thread {
 			DatagramPacket recvpacket = new DatagramPacket(buffer, buffer.length);
 		    try {
 				ds.receive(recvpacket);
-			    String s = new String(packet.getData(), packet.getOffset(), packet.getLength(), StandardCharsets.UTF_8);
+			    String s = new String(recvpacket.getData(), recvpacket.getOffset(), recvpacket.getLength(), StandardCharsets.UTF_8);
 				if (s.equals("HELLO")) {
 					ACK += 1;
 					System.out.println("Recieved HELLO!");
@@ -53,6 +64,7 @@ public class Init extends Thread {
 				e.printStackTrace();
 			}
 		}
+		ds.close();
 		Global.totalPlayer = ACK;
 		Global.localplayer = ACK + 1;
 		
