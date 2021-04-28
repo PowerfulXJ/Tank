@@ -28,7 +28,7 @@ public class BroadcastListener extends Thread {
 		    try {
 				ds.receive(recvpacket);
 			    String s = new String(recvpacket.getData(), recvpacket.getOffset(), recvpacket.getLength(), StandardCharsets.UTF_8);
-				if (s.equals("HELLO")) {
+				if (s.equals("Hello")) {
 					Global.totalPlayer += 1;
 					Global.localplayer =- 1;
 					InetAddress ipaddr = recvpacket.getAddress();
