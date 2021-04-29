@@ -13,7 +13,6 @@ import javax.swing.*;
 
 import java.awt.*;
 
-import javax.swing.*;
 import javax.swing.Timer;
 
 
@@ -62,7 +61,7 @@ public class Gameplay  extends JPanel implements ActionListener
 	private int delay=8;
 	
 	private PlayerListener playerListener = null;
-	private Player2Listener player2Listener = null;
+	//private Player2Listener player2Listener = null;
 	
 	private Player1Bullet player1Bullet = null;
 	private Player2Bullet player2Bullet = null;
@@ -76,14 +75,14 @@ public class Gameplay  extends JPanel implements ActionListener
 	{				
 		br = new brick();
 		playerListener = new PlayerListener();
-		player2Listener = new Player2Listener();
+		//player2Listener = new Player2Listener();
 		setFocusable(true);
 		//addKeyListener(this);
 		addKeyListener(playerListener);
-		addKeyListener(player2Listener);
+		//addKeyListener(player2Listener);
 		setFocusTraversalKeysEnabled(false);
 		
-		Global.Player2Actions = new LinkedList<String>();
+		Global.webPlayerActions = new LinkedList<String>();
 		webPlayerListener webplayerListener = new webPlayerListener();
 		webplayerListener.start();
 		
@@ -368,15 +367,18 @@ public class Gameplay  extends JPanel implements ActionListener
 		public void keyTyped(KeyEvent e) {}
 		public void keyReleased(KeyEvent e) {}		
 		public void keyPressed(KeyEvent e) {	
-			DatagramSocket ds = null;
+			InetAddress addr1 = Global.IPAddresses.remove();
+			InetAddress addr2 = Global.IPAddresses.remove();
+			DatagramSocket ds1 = null;
+			DatagramSocket ds2 = null;
 			try {
-				ds = new DatagramSocket();
-				ds.setSoTimeout(1000);
-				ds.connect(InetAddress.getByName("localhost"), 6666); // 连接指定服务器和端口
+				ds1 = new DatagramSocket();
+				ds2 = new DatagramSocket();
+				ds1.setSoTimeout(1000);
+				ds2.setSoTimeout(1000);
+				ds1.connect(addr1, 6666); // set target ip and port number
+				ds2.connect(addr2, 6666);
 			} catch (SocketException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (UnknownHostException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -417,186 +419,415 @@ public class Gameplay  extends JPanel implements ActionListener
 			}
 			if(e.getKeyCode()== KeyEvent.VK_F)
 			{
-				byte[] data = "shoot".getBytes();
-	    		DatagramPacket packet = new DatagramPacket(data, data.length);
-	    		try {
-					ds.send(packet);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (Global.localplayer == 1) {
+					byte[] data = "1shoot".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if(!player1Shoot)
+					{
+						if(player1up)
+						{					
+							player1Bullet = new Player1Bullet(player1X + 20, player1Y);
+						}
+						else if(player1down)
+						{					
+							player1Bullet = new Player1Bullet(player1X + 20, player1Y + 40);
+						}
+						else if(player1right)
+						{				
+							player1Bullet = new Player1Bullet(player1X + 40, player1Y + 20);
+						}
+						else if(player1left)
+						{			
+							player1Bullet = new Player1Bullet(player1X, player1Y + 20);
+						}
+						
+						player1Shoot = true;
+					}
 				}
-				if(!player1Shoot)
-				{
-					if(player1up)
-					{					
-						player1Bullet = new Player1Bullet(player1X + 20, player1Y);
+				if (Global.localplayer == 2) {
+					byte[] data = "2shoot".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-					else if(player1down)
-					{					
-						player1Bullet = new Player1Bullet(player1X + 20, player1Y + 40);
+					if(!player2Shoot)
+					{
+						if(player2up)
+						{					
+							player2Bullet = new Player2Bullet(player2X + 20, player2Y);
+						}
+						else if(player2down)
+						{					
+							player2Bullet = new Player2Bullet(player2X + 20, player2Y + 40);
+						}
+						else if(player2right)
+						{				
+							player2Bullet = new Player2Bullet(player2X + 40, player2Y + 20);
+						}
+						else if(player2left)
+						{			
+							player2Bullet = new Player2Bullet(player2X, player2Y + 20);
+						}
+						
+						player2Shoot = true;
 					}
-					else if(player1right)
-					{				
-						player1Bullet = new Player1Bullet(player1X + 40, player1Y + 20);
+				}
+				if (Global.localplayer == 3) {
+					byte[] data = "3shoot".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-					else if(player1left)
-					{			
-						player1Bullet = new Player1Bullet(player1X, player1Y + 20);
+					if(!player3Shoot)
+					{
+						if(player3up)
+						{					
+							player3Bullet = new Player3Bullet(player3X + 20, player3Y);
+						}
+						else if(player3down)
+						{					
+							player3Bullet = new Player3Bullet(player3X + 20, player3Y + 40);
+						}
+						else if(player3right)
+						{				
+							player3Bullet = new Player3Bullet(player3X + 40, player3Y + 20);
+						}
+						else if(player3left)
+						{			
+							player3Bullet = new Player3Bullet(player3X, player3Y + 20);
+						}
+						
+						player3Shoot = true;
 					}
-					
-					player1Shoot = true;
 				}
 			}
 			if(e.getKeyCode()== KeyEvent.VK_UP)
 			{
-				byte[] data = "up".getBytes();
-	    		DatagramPacket packet = new DatagramPacket(data, data.length);
-	    		try {
-					ds.send(packet);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (Global.localplayer == 1) {
+					byte[] data = "1up".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player1right = false;
+					player1left = false;
+					player1down = false; 
+					player1up = true;		
+					
+					if(!(player1Y < 10))
+						player1Y-=10;
 				}
-				player1right = false;
-				player1left = false;
-				player1down = false; 
-				player1up = true;		
+				if (Global.localplayer == 2) {
+					byte[] data = "2up".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player2right = false;
+					player2left = false;
+					player2down = false; 
+					player2up = true;		
+					
+					if(!(player2Y < 10))
+						player2Y-=10;
+				}
+				if (Global.localplayer == 3) {
+					byte[] data = "3up".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player3right = false;
+					player3left = false;
+					player3down = false; 
+					player3up = true;		
+					
+					if(!(player3Y < 10))
+						player3Y-=10;
+				}
 				
-				if(!(player1Y < 10))
-					player1Y-=10;
 
 			}
 			if(e.getKeyCode()== KeyEvent.VK_LEFT)
 			{
-				byte[] data = "left".getBytes();
-	    		DatagramPacket packet = new DatagramPacket(data, data.length);
-	    		try {
-					ds.send(packet);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (Global.localplayer == 1) {
+					byte[] data = "1left".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player1right = false;
+					player1left = true;
+					player1down = false;
+					player1up = false;
+					
+					if(!(player1X < 10))
+						player1X-=10;
 				}
-				player1right = false;
-				player1left = true;
-				player1down = false;
-				player1up = false;
 				
-				if(!(player1X < 10))
-					player1X-=10;
+				if (Global.localplayer == 2) {
+					byte[] data = "2left".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player2right = false;
+					player2left = true;
+					player2down = false;
+					player2up = false;
+					
+					if(!(player2X < 10))
+						player2X-=10;
+				}
+				
+				if (Global.localplayer == 3) {
+					byte[] data = "3left".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player3right = false;
+					player3left = true;
+					player3down = false;
+					player3up = false;
+					
+					if(!(player3X < 10))
+						player3X-=10;
+				}
+				
 			}
 			if(e.getKeyCode()== KeyEvent.VK_DOWN)
 			{
-				byte[] data = "down".getBytes();
-	    		DatagramPacket packet = new DatagramPacket(data, data.length);
-	    		try {
-					ds.send(packet);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (Global.localplayer == 1) {
+					byte[] data = "1down".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player1right = false;
+					player1left = false;
+					player1down = true;
+					player1up = false;
+					
+					if(!(player1Y > 540))
+						player1Y+=10;
 				}
-				player1right = false;
-				player1left = false;
-				player1down = true;
-				player1up = false;
+				if (Global.localplayer == 2) {
+					byte[] data = "2down".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player2right = false;
+					player2left = false;
+					player2down = true;
+					player2up = false;
+					
+					if(!(player2Y > 540))
+						player2Y+=10;
+				}
+				if (Global.localplayer == 3) {
+					byte[] data = "3down".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player3right = false;
+					player3left = false;
+					player3down = true;
+					player3up = false;
+					
+					if(!(player3Y > 540))
+						player3Y+=10;
+				}
 				
-				if(!(player1Y > 540))
-					player1Y+=10;
 			}
 			if(e.getKeyCode()== KeyEvent.VK_RIGHT)
 			{
-				byte[] data = "right".getBytes();
-	    		DatagramPacket packet = new DatagramPacket(data, data.length);
-	    		try {
-					ds.send(packet);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (Global.localplayer == 1) {
+					byte[] data = "1right".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player1right = true;
+					player1left = false;
+					player1down = false;
+					player1up = false;
+					
+					if(!(player1X > 590))
+						player1X+=10;
 				}
-				player1right = true;
-				player1left = false;
-				player1down = false;
-				player1up = false;
+				if (Global.localplayer == 2) {
+					byte[] data = "2right".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player2right = true;
+					player2left = false;
+					player2down = false;
+					player2up = false;
+					
+					if(!(player2X > 590))
+						player2X+=10;
+				}
+				if (Global.localplayer == 3) {
+					byte[] data = "3right".getBytes();
+		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		try {
+						ds1.send(packet);
+						ds2.send(packet);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					player3right = true;
+					player3left = false;
+					player3down = false;
+					player3up = false;
+					
+					if(!(player3X > 590))
+						player3X+=10;
+				}
 				
-				if(!(player1X > 590))
-					player1X+=10;
 			}
 		}
 	}
 	
-	private class Player2Listener implements KeyListener
-	{
-		public void keyTyped(KeyEvent e) {}
-		public void keyReleased(KeyEvent e) {}		
-		public void keyPressed(KeyEvent e) 
-		{	
-			if(e.getKeyCode()== KeyEvent.VK_M)
-			{
-				if(!player2Shoot)
-				{
-					if(player2up)
-					{					
-						player2Bullet = new Player2Bullet(player2X + 20, player2Y);
-					}
-					else if(player2down)
-					{					
-						player2Bullet = new Player2Bullet(player2X + 20, player2Y + 40);
-					}
-					else if(player2right)
-					{				
-						player2Bullet = new Player2Bullet(player2X + 40, player2Y + 20);
-					}
-					else if(player2left)
-					{			
-						player2Bullet = new Player2Bullet(player2X, player2Y + 20);
-					}
-					
-					player2Shoot = true;
-				}
-			}
-			if(e.getKeyCode()== KeyEvent.VK_UP)
-			{
-				player2right = false;
-				player2left = false;
-				player2down = false;
-				player2up = true;		
-				
-				if(!(player2Y < 10))
-					player2Y-=10;
-
-			}
-			if(e.getKeyCode()== KeyEvent.VK_LEFT)
-			{
-				player2right = false;
-				player2left = true;
-				player2down = false;
-				player2up = false;
-				
-				if(!(player2X < 10))
-					player2X-=10;
-			}
-			if(e.getKeyCode()== KeyEvent.VK_DOWN)
-			{
-				player2right = false;
-				player2left = false;
-				player2down = true;
-				player2up = false;
-				
-				if(!(player2Y > 540))
-					player2Y+=10;
-			}
-			if(e.getKeyCode()== KeyEvent.VK_RIGHT)
-			{
-				player2right = true;
-				player2left = false;
-				player2down = false;
-				player2up = false;
-				
-				if(!(player2X > 590))
-					player2X+=10;
-			}
-			
-		}
-	}
+//	private class Player2Listener implements KeyListener
+//	{
+//		public void keyTyped(KeyEvent e) {}
+//		public void keyReleased(KeyEvent e) {}		
+//		public void keyPressed(KeyEvent e) 
+//		{	
+//			if(e.getKeyCode()== KeyEvent.VK_M)
+//			{
+//				if(!player2Shoot)
+//				{
+//					if(player2up)
+//					{					
+//						player2Bullet = new Player2Bullet(player2X + 20, player2Y);
+//					}
+//					else if(player2down)
+//					{					
+//						player2Bullet = new Player2Bullet(player2X + 20, player2Y + 40);
+//					}
+//					else if(player2right)
+//					{				
+//						player2Bullet = new Player2Bullet(player2X + 40, player2Y + 20);
+//					}
+//					else if(player2left)
+//					{			
+//						player2Bullet = new Player2Bullet(player2X, player2Y + 20);
+//					}
+//					
+//					player2Shoot = true;
+//				}
+//			}
+//			if(e.getKeyCode()== KeyEvent.VK_W)
+//			{
+//				player2right = false;
+//				player2left = false;
+//				player2down = false;
+//				player2up = true;		
+//				
+//				if(!(player2Y < 10))
+//					player2Y-=10;
+//
+//			}
+//			if(e.getKeyCode()== KeyEvent.VK_A)
+//			{
+//				player2right = false;
+//				player2left = true;
+//				player2down = false;
+//				player2up = false;
+//				
+//				if(!(player2X < 10))
+//					player2X-=10;
+//			}
+//			if(e.getKeyCode()== KeyEvent.VK_S)
+//			{
+//				player2right = false;
+//				player2left = false;
+//				player2down = true;
+//				player2up = false;
+//				
+//				if(!(player2Y > 540))
+//					player2Y+=10;
+//			}
+//			if(e.getKeyCode()== KeyEvent.VK_D)
+//			{
+//				player2right = true;
+//				player2left = false;
+//				player2down = false;
+//				player2up = false;
+//				
+//				if(!(player2X > 590))
+//					player2X+=10;
+//			}
+//			
+//		}
+//	}
 	
 	
 	class webPlayerListener extends Thread {
@@ -604,19 +835,150 @@ public class Gameplay  extends JPanel implements ActionListener
 	    public void run() {
 	    	System.out.println("Listening to actions");
 	    	while(true) {
-	    		if (Global.Player2Actions.size() > 0) {
-			    	System.out.println(Global.Player2Actions.size());
+	    		if (Global.webPlayerActions.size() > 0) {
+			    	System.out.println(Global.webPlayerActions.size());
 	    			System.out.println("recieved action");
-	    			String s = Global.Player2Actions.remove();
+	    			String s = Global.webPlayerActions.remove();
 	    			System.out.println(s);
 	    			
+	    			if(s.equals("1shoot"))
+	    			{
+	    				if(!player1Shoot)
+	    				{
+	    					if(player1up)
+	    					{					
+	    						player1Bullet = new Player1Bullet(player1X + 20, player1Y);
+	    					}
+	    					else if(player1down)
+	    					{					
+	    						player1Bullet = new Player1Bullet(player1X + 20, player1Y + 40);
+	    					}
+	    					else if(player1right)
+	    					{				
+	    						player1Bullet = new Player1Bullet(player1X + 40, player1Y + 20);
+	    					}
+	    					else if(player1left)
+	    					{			
+	    						player1Bullet = new Player1Bullet(player1X, player1Y + 20);
+	    					}
+	    					
+	    					player1Shoot = true;
+	    				}
+	    			}
+	    			if(s.equals("1up"))
+	    			{
+	    				player1right = false;
+	    				player1left = false;
+	    				player1down = false;
+	    				player1up = true;		
+	    				
+	    				if(!(player1Y < 10))
+	    					player1Y-=10;
+
+	    			}
+	    			if(s.equals("1left"))
+	    			{
+	    				player1right = false;
+	    				player1left = true;
+	    				player1down = false;
+	    				player1up = false;
+	    				
+	    				if(!(player1X < 10))
+	    					player1X-=10;
+	    			}
+	    			if(s.equals("1down"))
+	    			{
+	    				player1right = false;
+	    				player1left = false;
+	    				player1down = true;
+	    				player1up = false;
+	    				
+	    				if(!(player1Y > 540))
+	    					player1Y+=10;
+	    			}
+	    			if(s.equals("1right"))
+	    			{
+	    				player1right = true;
+	    				player1left = false;
+	    				player1down = false;
+	    				player1up = false;
+	    				
+	    				if(!(player1X > 590))
+	    					player1X+=10;
+	    			}
 	    			
 	    			
-	    			if(s.equals("shoot"))
+	    			if(s.equals("2shoot"))
 	    			{
 	    				if(!player2Shoot)
 	    				{
 	    					if(player2up)
+	    					{					
+	    						player2Bullet = new Player2Bullet(player2X + 20, player2Y);
+	    					}
+	    					else if(player2down)
+	    					{					
+	    						player2Bullet = new Player2Bullet(player2X + 20, player2Y + 40);
+	    					}
+	    					else if(player2right)
+	    					{				
+	    						player2Bullet = new Player2Bullet(player2X + 40, player2Y + 20);
+	    					}
+	    					else if(player2left)
+	    					{			
+	    						player2Bullet = new Player2Bullet(player2X, player2Y + 20);
+	    					}
+	    					
+	    					player2Shoot = true;
+	    				}
+	    			}
+	    			if(s.equals("2up"))
+	    			{
+	    				player2right = false;
+	    				player2left = false;
+	    				player2down = false;
+	    				player2up = true;		
+	    				
+	    				if(!(player2Y < 10))
+	    					player2Y-=10;
+
+	    			}
+	    			if(s.equals("2left"))
+	    			{
+	    				player2right = false;
+	    				player2left = true;
+	    				player2down = false;
+	    				player2up = false;
+	    				
+	    				if(!(player2X < 10))
+	    					player2X-=10;
+	    			}
+	    			if(s.equals("2down"))
+	    			{
+	    				player2right = false;
+	    				player2left = false;
+	    				player2down = true;
+	    				player2up = false;
+	    				
+	    				if(!(player2Y > 540))
+	    					player2Y+=10;
+	    			}
+	    			if(s.equals("2right"))
+	    			{
+	    				player2right = true;
+	    				player2left = false;
+	    				player2down = false;
+	    				player2up = false;
+	    				
+	    				if(!(player2X > 590))
+	    					player2X+=10;
+	    			}
+	    			
+	    			if(s.equals("3shoot"))
+	    			{
+	    				if(!player3Shoot)
+	    				{
+	    					if(player3up)
 	    					{					
 	    						player3Bullet = new Player3Bullet(player3X + 20, player3Y);
 	    					}
@@ -624,19 +986,19 @@ public class Gameplay  extends JPanel implements ActionListener
 	    					{					
 	    						player3Bullet = new Player3Bullet(player3X + 20, player3Y + 40);
 	    					}
-	    					else if(player2right)
+	    					else if(player3right)
 	    					{				
 	    						player3Bullet = new Player3Bullet(player3X + 40, player3Y + 20);
 	    					}
 	    					else if(player3left)
 	    					{			
-	    						player3Bullet = new Player3Bullet(player3X, player3Y + 20);
+	    						player3Bullet = new Player3Bullet(player2X, player2Y + 20);
 	    					}
 	    					
 	    					player3Shoot = true;
 	    				}
 	    			}
-	    			if(s.equals("up"))
+	    			if(s.equals("3up"))
 	    			{
 	    				player3right = false;
 	    				player3left = false;
@@ -647,7 +1009,7 @@ public class Gameplay  extends JPanel implements ActionListener
 	    					player3Y-=10;
 
 	    			}
-	    			if(s.equals("left"))
+	    			if(s.equals("3left"))
 	    			{
 	    				player3right = false;
 	    				player3left = true;
@@ -657,7 +1019,7 @@ public class Gameplay  extends JPanel implements ActionListener
 	    				if(!(player3X < 10))
 	    					player3X-=10;
 	    			}
-	    			if(s.equals("down"))
+	    			if(s.equals("3down"))
 	    			{
 	    				player3right = false;
 	    				player3left = false;
@@ -667,7 +1029,7 @@ public class Gameplay  extends JPanel implements ActionListener
 	    				if(!(player3Y > 540))
 	    					player3Y+=10;
 	    			}
-	    			if(s.equals("right"))
+	    			if(s.equals("3right"))
 	    			{
 	    				player3right = true;
 	    				player3left = false;
@@ -683,16 +1045,3 @@ public class Gameplay  extends JPanel implements ActionListener
 	    }
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

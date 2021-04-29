@@ -21,6 +21,12 @@ public class Main {
 		t.start();
 //		System.out.println(1);
 		JFrame obj=new JFrame();
+//		try {
+//			broadcastListener.join();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		Gameplay gamePlay = new Gameplay();
 		
 		obj.setBounds(10, 10, 800, 630);
@@ -62,7 +68,7 @@ class MyThread extends Thread {
     	    // 收取到的数据存储在buffer中，由packet.getOffset(), packet.getLength()指定起始位置和长度
     	    // 将其按UTF-8编码转换为String:
     	    String s = new String(packet.getData(), packet.getOffset(), packet.getLength(), StandardCharsets.UTF_8);
-    	    Global.Player2Actions.add(s);
+    	    Global.webPlayerActions.add(s);
     	    //System.out.println(Global.Player2Actions.size());
 
     	    byte[] data = "ACK".getBytes(StandardCharsets.UTF_8);
