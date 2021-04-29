@@ -55,7 +55,7 @@ public class BroadcastListener extends Thread {
 		ds.close();
 		Global.addr1 = Global.IPAddresses.remove();
 		Global.addr2 = Global.IPAddresses.remove();
-		System.out.println("player number: " + Global.localplayer);
-		System.out.println("web player number: " + Global.IPAddresses.size());
+		System.out.println("You are player " + Global.localplayer);
+		//System.out.println("web player number: " + Global.IPAddresses.size());
 	}
 }

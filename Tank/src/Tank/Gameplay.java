@@ -1088,7 +1088,7 @@ public class Gameplay  extends JPanel implements ActionListener
 	    					}
 	    					else if(player3left)
 	    					{			
-	    						player3Bullet = new Player3Bullet(player2X, player2Y + 20);
+	    						player3Bullet = new Player3Bullet(player3X, player3Y + 20);
 	    					}
 	    					
 	    					player3Shoot = true;
