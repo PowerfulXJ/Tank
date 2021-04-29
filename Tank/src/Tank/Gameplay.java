@@ -373,11 +373,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				play = false;
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 30));
-				g.drawString("(Space to Restart)", 230,430);
-				player1X = -100;
-				player1Y = -100;
+				//g.drawString("(Space to Restart)", 230,430);
+				player1X = 0;
+				player1Y = 0;
 			}
-			if (player1lives > 0 && player2lives == 0 && player3lives == 0) {
+			if (player1lives > 0 && player2lives <= 0 && player3lives <= 0) {
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 60));
 				g.drawString("Game Over", 200,300);
@@ -385,7 +385,7 @@ public class Gameplay  extends JPanel implements ActionListener
 				play = false;
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 30));
-				g.drawString("(Space to Restart)", 230,430);
+				//g.drawString("(Space to Restart)", 230,430);
 			}
 		}
 		if(Global.localplayer == 2)
@@ -397,12 +397,12 @@ public class Gameplay  extends JPanel implements ActionListener
 				g.drawString("You lose", 180,380);
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 30));
-				g.drawString("(Space to Restart)", 230,430);
+				//g.drawString("(Space to Restart)", 230,430);
 				play = false;
-				player2X = -100;
-				player2Y = -100;
+				player2X = 0;
+				player2Y = 0;
 			}
-			if (player2lives > 0 && player1lives == 0 && player3lives == 0) {
+			if (player2lives > 0 && player1lives <= 0 && player3lives <= 0) {
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 60));
 				g.drawString("Game Over", 200,300);
@@ -410,7 +410,7 @@ public class Gameplay  extends JPanel implements ActionListener
 				play = false;
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 30));
-				g.drawString("(Space to Restart)", 230,430);
+				//g.drawString("(Space to Restart)", 230,430);
 			}
 		}
 		if(Global.localplayer == 3)
@@ -422,12 +422,12 @@ public class Gameplay  extends JPanel implements ActionListener
 				g.drawString("You lose", 180,380);
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 30));
-				g.drawString("(Space to Restart)", 230,430);
+				//g.drawString("(Space to Restart)", 230,430);
 				play = false;
-				player3X = -100;
-				player3Y = -100;
+				player3X = 0;
+				player3Y = 0;
 			}
-			if (player3lives > 0 && player1lives == 0 && player2lives == 0) {
+			if (player3lives > 0 && player1lives <= 0 && player2lives <= 0) {
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 60));
 				g.drawString("Game Over", 200,300);
@@ -435,7 +435,7 @@ public class Gameplay  extends JPanel implements ActionListener
 				play = false;
 				g.setColor(Color.white);
 				g.setFont(new Font("serif",Font.BOLD, 30));
-				g.drawString("(Space to Restart)", 230,430);
+				//g.drawString("(Space to Restart)", 230,430);
 			}
 		}
 		
