@@ -367,8 +367,8 @@ public class Gameplay  extends JPanel implements ActionListener
 		public void keyTyped(KeyEvent e) {}
 		public void keyReleased(KeyEvent e) {}		
 		public void keyPressed(KeyEvent e) {	
-			InetAddress addr1 = Global.IPAddresses.remove();
-			InetAddress addr2 = Global.IPAddresses.remove();
+//			InetAddress addr1 = Global.IPAddresses.remove();
+//			InetAddress addr2 = Global.IPAddresses.remove();
 			DatagramSocket ds1 = null;
 			DatagramSocket ds2 = null;
 			try {
@@ -376,8 +376,8 @@ public class Gameplay  extends JPanel implements ActionListener
 				ds2 = new DatagramSocket();
 				ds1.setSoTimeout(1000);
 				ds2.setSoTimeout(1000);
-				ds1.connect(addr1, 6666); // set target ip and port number
-				ds2.connect(addr2, 6666);
+				ds1.connect(Global.addr1, 6666); // set target ip and port number
+				ds2.connect(Global.addr2, 6666);
 			} catch (SocketException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
