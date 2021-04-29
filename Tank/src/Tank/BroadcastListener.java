@@ -15,7 +15,7 @@ public class BroadcastListener extends Thread {
 	@Override
 	public void run() {
 		DatagramSocket ds = null;
-		DatagramPacket dp = null;
+		//DatagramPacket dp = null;
 		Global.IPAddresses = new LinkedList<InetAddress>();
 		try {
 			ds = new DatagramSocket(port);

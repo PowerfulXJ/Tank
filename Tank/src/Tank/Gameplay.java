@@ -421,10 +421,11 @@ public class Gameplay  extends JPanel implements ActionListener
 			{
 				if (Global.localplayer == 1) {
 					byte[] data = "1shoot".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -453,10 +454,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				}
 				if (Global.localplayer == 2) {
 					byte[] data = "2shoot".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -485,10 +487,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				}
 				if (Global.localplayer == 3) {
 					byte[] data = "3shoot".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -520,10 +523,11 @@ public class Gameplay  extends JPanel implements ActionListener
 			{
 				if (Global.localplayer == 1) {
 					byte[] data = "1up".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -538,10 +542,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				}
 				if (Global.localplayer == 2) {
 					byte[] data = "2up".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -556,10 +561,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				}
 				if (Global.localplayer == 3) {
 					byte[] data = "3up".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -579,10 +585,11 @@ public class Gameplay  extends JPanel implements ActionListener
 			{
 				if (Global.localplayer == 1) {
 					byte[] data = "1left".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -598,10 +605,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				
 				if (Global.localplayer == 2) {
 					byte[] data = "2left".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -617,10 +625,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				
 				if (Global.localplayer == 3) {
 					byte[] data = "3left".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -639,10 +648,11 @@ public class Gameplay  extends JPanel implements ActionListener
 			{
 				if (Global.localplayer == 1) {
 					byte[] data = "1down".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -657,10 +667,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				}
 				if (Global.localplayer == 2) {
 					byte[] data = "2down".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -675,10 +686,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				}
 				if (Global.localplayer == 3) {
 					byte[] data = "3down".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -697,10 +709,11 @@ public class Gameplay  extends JPanel implements ActionListener
 			{
 				if (Global.localplayer == 1) {
 					byte[] data = "1right".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -715,10 +728,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				}
 				if (Global.localplayer == 2) {
 					byte[] data = "2right".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -733,10 +747,11 @@ public class Gameplay  extends JPanel implements ActionListener
 				}
 				if (Global.localplayer == 3) {
 					byte[] data = "3right".getBytes();
-		    		DatagramPacket packet = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet1 = new DatagramPacket(data, data.length);
+		    		DatagramPacket packet2 = new DatagramPacket(data, data.length);
 		    		try {
-						ds1.send(packet);
-						ds2.send(packet);
+						ds1.send(packet1);
+						ds2.send(packet2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
