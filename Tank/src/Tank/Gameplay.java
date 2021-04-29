@@ -181,6 +181,15 @@ public class Gameplay  extends JPanel implements ActionListener
 					player1Shoot = false;
 					bulletShootDir1 = "";
 				}
+				if(new Rectangle(player1Bullet.getX(), player1Bullet.getY(), 10, 10)
+						.intersects(new Rectangle(player3X, player3Y, 50, 50)))
+						{
+							player1score += 10;
+							player3lives -= 1;
+							player1Bullet = null;
+							player1Shoot = false;
+							bulletShootDir1 = "";
+						}
 				
 				if(br.checkCollision(player1Bullet.getX(), player1Bullet.getY())
 						|| br.checkSolidCollision(player1Bullet.getX(), player1Bullet.getY()))
@@ -238,6 +247,15 @@ public class Gameplay  extends JPanel implements ActionListener
 					player2Shoot = false;
 					bulletShootDir2 = "";
 				}
+				if(new Rectangle(player2Bullet.getX(), player2Bullet.getY(), 10, 10)
+						.intersects(new Rectangle(player3X, player3Y, 50, 50)))
+						{
+							player2score += 10;
+							player3lives -= 1;
+							player2Bullet = null;
+							player2Shoot = false;
+							bulletShootDir2 = "";
+						}
 				
 				if(player2Bullet != null && br.checkCollision(player2Bullet.getX(), player2Bullet.getY())
 						|| br.checkSolidCollision(player2Bullet.getX(), player2Bullet.getY()))
@@ -295,6 +313,15 @@ public class Gameplay  extends JPanel implements ActionListener
 					player3Shoot = false;
 					bulletShootDir3 = "";
 				}
+				if(new Rectangle(player3Bullet.getX(), player3Bullet.getY(), 10, 10)
+						.intersects(new Rectangle(player2X, player2Y, 50, 50)))
+						{
+							player3score += 10;
+							player2lives -= 1;
+							player3Bullet = null;
+							player3Shoot = false;
+							bulletShootDir3 = "";
+						}
 				
 				if(player3Bullet != null && br.checkCollision(player3Bullet.getX(), player3Bullet.getY())
 						|| br.checkSolidCollision(player3Bullet.getX(), player3Bullet.getY()))
@@ -324,32 +351,81 @@ public class Gameplay  extends JPanel implements ActionListener
 		g.drawString("Scores", 700,30);
 		g.drawString("Player 1:  "+player1score, 670,60);
 		g.drawString("Player 2:  "+player2score, 670,90);
+		g.drawString("Player 3:  "+player3score, 670,120);
 		
-		g.drawString("Lives", 700,150);
-		g.drawString("Player 1:  "+player1lives, 670,180);
-		g.drawString("Player 2:  "+player2lives, 670,210);
+		g.drawString("Lives", 700,180);
+		g.drawString("Player 1:  "+player1lives, 670,210);
+		g.drawString("Player 2:  "+player2lives, 670,240);
+		g.drawString("Player 3:  "+player3lives, 670,240);
 		
-		if(player1lives == 0)
+		if(Global.localplayer == 1)
 		{
-			g.setColor(Color.white);
-			g.setFont(new Font("serif",Font.BOLD, 60));
-			g.drawString("Game Over", 200,300);
-			g.drawString("Player 2 Won", 180,380);
-			play = false;
-			g.setColor(Color.white);
-			g.setFont(new Font("serif",Font.BOLD, 30));
-			g.drawString("(Space to Restart)", 230,430);
+			if (player1lives == 0) {
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 60));
+				g.drawString("Game Over", 200,300);
+				g.drawString("You lose", 180,380);
+				play = false;
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 30));
+				g.drawString("(Space to Restart)", 230,430);
+			}
+			if (player1lives > 0 && player2lives == 0 && player3lives == 0) {
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 60));
+				g.drawString("Game Over", 200,300);
+				g.drawString("You win", 180,380);
+				play = false;
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 30));
+				g.drawString("(Space to Restart)", 230,430);
+			}
 		}
-		else if(player2lives == 0)
+		if(Global.localplayer == 2 && player2lives == 0)
 		{
-			g.setColor(Color.white);
-			g.setFont(new Font("serif",Font.BOLD, 60));
-			g.drawString("Game Over", 200,300);
-			g.drawString("Player 1 Won", 180,380);
-			g.setColor(Color.white);
-			g.setFont(new Font("serif",Font.BOLD, 30));
-			g.drawString("(Space to Restart)", 230,430);
-			play = false;
+			if (player2lives == 0) {
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 60));
+				g.drawString("Game Over", 200,300);
+				g.drawString("You lose", 180,380);
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 30));
+				g.drawString("(Space to Restart)", 230,430);
+				play = false;
+			}
+			if (player2lives > 0 && player1lives == 0 && player3lives == 0) {
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 60));
+				g.drawString("Game Over", 200,300);
+				g.drawString("You win", 180,380);
+				play = false;
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 30));
+				g.drawString("(Space to Restart)", 230,430);
+			}
+		}
+		if(Global.localplayer == 3)
+		{
+			if (player3lives == 0) {
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 60));
+				g.drawString("Game Over", 200,300);
+				g.drawString("You lose", 180,380);
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 30));
+				g.drawString("(Space to Restart)", 230,430);
+				play = false;
+			}
+			if (player3lives > 0 && player1lives == 0 && player2lives == 0) {
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 60));
+				g.drawString("Game Over", 200,300);
+				g.drawString("You win", 180,380);
+				play = false;
+				g.setColor(Color.white);
+				g.setFont(new Font("serif",Font.BOLD, 30));
+				g.drawString("(Space to Restart)", 230,430);
+			}
 		}
 		
 		g.dispose();
@@ -383,7 +459,7 @@ public class Gameplay  extends JPanel implements ActionListener
 				e1.printStackTrace();
 			}
 				
-			if(e.getKeyCode()== KeyEvent.VK_SPACE && (player1lives == 0 || player2lives == 0))
+			if(e.getKeyCode()== KeyEvent.VK_SPACE && ((player1lives == 0 && player2lives == 0) || (player1lives == 0 && player3lives == 0) || (player2lives == 0 && player3lives == 0)))
 			{
 				br = new brick();
 				player1X = 0;
