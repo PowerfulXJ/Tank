@@ -7,6 +7,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 
 
 public class Main {
@@ -15,6 +16,7 @@ public class Main {
 		Thread init = new Init();
 		Thread t = new MyThread();
 		Thread broadcastListener = new BroadcastListener();
+		Global.webPlayerActions = new LinkedList<String>();
 		broadcastListener.start();
 		init.start();
 		
@@ -45,6 +47,7 @@ public class Main {
 class MyThread extends Thread {
     @SuppressWarnings("resource")
 	@Override
+	
     public void run() {
         System.out.println("Action listener enabled!");
         DatagramSocket ds = null;

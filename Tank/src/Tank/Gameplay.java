@@ -82,7 +82,7 @@ public class Gameplay  extends JPanel implements ActionListener
 		//addKeyListener(player2Listener);
 		setFocusTraversalKeysEnabled(false);
 		
-		Global.webPlayerActions = new LinkedList<String>();
+		
 		webPlayerListener webplayerListener = new webPlayerListener();
 		webplayerListener.start();
 		
