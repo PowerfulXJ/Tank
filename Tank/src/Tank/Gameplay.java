@@ -386,7 +386,7 @@ public class Gameplay  extends JPanel implements ActionListener
 				g.drawString("(Space to Restart)", 230,430);
 			}
 		}
-		if(Global.localplayer == 2 && player2lives == 0)
+		if(Global.localplayer == 2)
 		{
 			if (player2lives == 0) {
 				g.setColor(Color.white);
