@@ -109,41 +109,46 @@ public class Gameplay  extends JPanel implements ActionListener
 		if(play)
 		{
 			// draw player 1
-			if(player1up)
-				player1=new ImageIcon("player1_tank_up.png");	
-			else if(player1down)
-				player1=new ImageIcon("player1_tank_down.png");
-			else if(player1right)
-				player1=new ImageIcon("player1_tank_right.png");
-			else if(player1left)
-				player1=new ImageIcon("player1_tank_left.png");
-				
-			player1.paintIcon(this, g, player1X, player1Y);
-			
+			if (player1lives > 0) {
+				if(player1up)
+					player1=new ImageIcon("player1_tank_up.png");	
+				else if(player1down)
+					player1=new ImageIcon("player1_tank_down.png");
+				else if(player1right)
+					player1=new ImageIcon("player1_tank_right.png");
+				else if(player1left)
+					player1=new ImageIcon("player1_tank_left.png");
+					
+				player1.paintIcon(this, g, player1X, player1Y);
+			}
 			// draw player 2
-			if(player2up)
-				player2=new ImageIcon("player2_tank_up.png");	
-			else if(player2down)
-				player2=new ImageIcon("player2_tank_down.png");
-			else if(player2right)
-				player2=new ImageIcon("player2_tank_right.png");
-			else if(player2left)
-				player2=new ImageIcon("player2_tank_left.png");
-			
-			player2.paintIcon(this, g, player2X, player2Y);
-			
+			if (player2lives > 0) {
+				if(player2up)
+					player2=new ImageIcon("player2_tank_up.png");	
+				else if(player2down)
+					player2=new ImageIcon("player2_tank_down.png");
+				else if(player2right)
+					player2=new ImageIcon("player2_tank_right.png");
+				else if(player2left)
+					player2=new ImageIcon("player2_tank_left.png");
+				
+				player2.paintIcon(this, g, player2X, player2Y);
+			}
 			// draw player 3
-			if(player3up)
-				player3=new ImageIcon("player3_tank_up.png");	
-			else if(player3down)
-				player3=new ImageIcon("player3_tank_down.png");
-			else if(player3right)
-				player3=new ImageIcon("player3_tank_right.png");
-			else if(player3left)
-				player3=new ImageIcon("player3_tank_left.png");
-						
-			player3.paintIcon(this, g, player3X, player3Y);
+			if(player3lives > 0){
+				if(player3up)
+					player3=new ImageIcon("player3_tank_up.png");	
+				else if(player3down)
+					player3=new ImageIcon("player3_tank_down.png");
+				else if(player3right)
+					player3=new ImageIcon("player3_tank_right.png");
+				else if(player3left)
+					player3=new ImageIcon("player3_tank_left.png");
+							
+				player3.paintIcon(this, g, player3X, player3Y);
+			}
 			
+			//draw bullets
 			if(player1Bullet != null && player1Shoot)
 			{
 				if(bulletShootDir1.equals(""))
@@ -356,7 +361,7 @@ public class Gameplay  extends JPanel implements ActionListener
 		g.drawString("Lives", 700,180);
 		g.drawString("Player 1:  "+player1lives, 670,210);
 		g.drawString("Player 2:  "+player2lives, 670,240);
-		g.drawString("Player 3:  "+player3lives, 670,240);
+		g.drawString("Player 3:  "+player3lives, 670,270);
 		
 		if(Global.localplayer == 1)
 		{
