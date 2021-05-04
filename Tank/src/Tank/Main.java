@@ -21,14 +21,13 @@ public class Main {
 		init.start();
 		
 		t.start();
-//		System.out.println(1);
 		JFrame obj=new JFrame();
-//		try {
-//			broadcastListener.join();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			broadcastListener.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Gameplay gamePlay = new Gameplay();
 		
 		obj.setBounds(10, 10, 800, 630);
